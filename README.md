@@ -27,7 +27,7 @@ sims = cn.list_similar_papers(doc_id = 1903.10457, input_type='arxiv_id')
 
 which returns
 
-```python
+```
 ArXiv id:  1903.10457
 Title: Learning the Relationship between Galaxies Spectra and their Star
   Formation Histories using Convolutional Neural Networks and Cosmological
@@ -65,7 +65,7 @@ sims = list_similar_papers(doc_id = ['simulation','sed','fitting'],
 
 which returns
 
-```python
+```
 Keyword(s):  ['simulation', 'sed', 'fitting']
 multi-keyword
 -----------------------------
