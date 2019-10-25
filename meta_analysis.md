@@ -27,3 +27,6 @@ Correlations with other quantities:
 
 3. Publication year:
 ![relevance_index_pubyear](meta/images/ri_vs_pubyear.png)
+
+Number of authors as a function of time:
+![numauthors_vs_pubyear](meta/images/numauthors_vs_pubyear.png)
