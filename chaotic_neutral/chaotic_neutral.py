@@ -12,8 +12,9 @@ from summa import summarizer
 import pickle
 import gensim
 import scipy.io as sio
+import plotly.graph_objects as go
 
-# using Andy Casey's ADS api: https://github.com/andycasey/ads
+# affiliations collected using Andy Casey's ADS api: https://github.com/andycasey/ads
 # import ads
 
 
@@ -191,21 +192,21 @@ def read_corpus(feeds, tokens_only=False, titles = False, authors = False):
 
 def save_trained_doc2vec_model(fname_tag):
 
-    model.save('data/model_'+fname_tag+'_trained.arxivmodel')
+    model.save('chaotic_neutral/data/model_'+fname_tag+'_trained.arxivmodel')
 
-    with open("data/titles"+fname_tag+".pkl", "wb") as fp:   #Pickling
+    with open("chaotic_neutral/data/titles"+fname_tag+".pkl", "wb") as fp:   #Pickling
         pickle.dump(all_titles, fp)
-    with open("data/abstracts"+fname_tag+".pkl", "wb") as fp:   #Pickling
+    with open("chaotic_neutral/data/abstracts"+fname_tag+".pkl", "wb") as fp:   #Pickling
         pickle.dump(all_abstracts, fp)
-    with open("data/authors"+fname_tag+".pkl", "wb") as fp:   #Pickling
+    with open("chaotic_neutral/data/authors"+fname_tag+".pkl", "wb") as fp:   #Pickling
         pickle.dump(all_authors, fp)
-    with open("data/ids"+fname_tag+".pkl", "wb") as fp:   #Pickling
+    with open("chaotic_neutral/data/ids"+fname_tag+".pkl", "wb") as fp:   #Pickling
         pickle.dump(all_ids, fp)
 
-    with open('data/train_corpus'+fname_tag+'.pkl', 'wb') as fp:
+    with open('chaotic_neutral/data/train_corpus'+fname_tag+'.pkl', 'wb') as fp:
         pickle.dump(train_corpus, fp)
 
-    with open('data/test_corpus'+fname_tag+'.pkl', 'wb') as fp:
+    with open('chaotic_neutral/data/test_corpus'+fname_tag+'.pkl', 'wb') as fp:
         pickle.dump(test_corpus, fp)
         
     return
@@ -213,22 +214,51 @@ def save_trained_doc2vec_model(fname_tag):
 def load_trained_doc2vec_model(fname_tag):
     
 
-    model = gensim.models.Word2Vec.load('data/model_'+fname_tag+'_trained.arxivmodel')
+    model = gensim.models.Word2Vec.load('chaotic_neutral/data/model_'+fname_tag+'_trained.arxivmodel')
 
-    with open("data/titles"+fname_tag+".pkl", "rb") as fp:
+    with open("chaotic_neutral/data/titles"+fname_tag+".pkl", "rb") as fp:
         all_titles = pickle.load(fp)
-    with open("data/abstracts"+fname_tag+".pkl", "rb") as fp:
+    with open("chaotic_neutral/data/abstracts"+fname_tag+".pkl", "rb") as fp:
         all_abstracts = pickle.load(fp)
-    with open("data/authors"+fname_tag+".pkl", "rb") as fp:
+    with open("chaotic_neutral/data/authors"+fname_tag+".pkl", "rb") as fp:
         all_authors = pickle.load(fp)
 
-    with open("data/train_corpus"+fname_tag+".pkl", "rb") as fp:
+    with open("chaotic_neutral/data/train_corpus"+fname_tag+".pkl", "rb") as fp:
         train_corpus = pickle.load(fp)
 
-    with open("data/test_corpus"+fname_tag+".pkl", "rb") as fp:
+    with open("chaotic_neutral/data/test_corpus"+fname_tag+".pkl", "rb") as fp:
         test_corpus = pickle.load(fp)
 
     return [model, all_titles, all_abstracts, all_authors, train_corpus, test_corpus]
+
+
+def load_trained_doc2vec_model_mapper(fname_tag):
+    
+    model = gensim.models.Word2Vec.load('chaotic_neutral/data/model_'+fname_tag+'_trained.arxivmodel')
+
+    with open("chaotic_neutral/data/titles"+fname_tag+".pkl", "rb") as fp:
+        all_titles = pickle.load(fp)
+    with open("chaotic_neutral/data/abstracts"+fname_tag+".pkl", "rb") as fp:
+        all_abstracts = pickle.load(fp)
+    with open("chaotic_neutral/data/authors"+fname_tag+".pkl", "rb") as fp:
+        all_authors = pickle.load(fp)
+    with open("chaotic_neutral/data/ids"+fname_tag+".pkl", "rb") as fp:
+        all_ids = pickle.load(fp)
+
+    with open("chaotic_neutral/data/train_corpus"+fname_tag+".pkl", "rb") as fp:
+        train_corpus = pickle.load(fp)
+
+    with open("chaotic_neutral/data/test_corpus"+fname_tag+".pkl", "rb") as fp:
+        test_corpus = pickle.load(fp)
+        
+    with open("chaotic_neutral/data/recent_affils.pkl", "rb") as fp:
+        recent_affils = pickle.load(fp)
+        
+    with open("chaotic_neutral/data/recent_latlon.pkl", "rb") as fp:
+        [place_names, place_locs] = pickle.load(fp)
+
+    return [model, all_titles, all_abstracts, all_authors, all_ids, train_corpus, test_corpus, recent_affils, place_names, place_locs]
+
 
 def build_and_train_model(feeds, fname_tag = 'trained_model'):
 
@@ -250,7 +280,7 @@ def build_and_train_model(feeds, fname_tag = 'trained_model'):
     model.build_vocab(train_corpus)
     model.train(train_corpus, total_examples=model.corpus_count, epochs=model.epochs)
     
-    save_trained_doc2vec_model(fname_rag)
+    save_trained_doc2vec_model(fname_tag)
     
     return model, train_corpus, test_corpus
 
@@ -270,7 +300,9 @@ def find_papers_by_author(auth_name):
 
     return doc_ids
 
-def list_similar_papers(doc_id = [], input_type = 'doc_id', show_authors = False, show_summary = False, return_n = 10):
+def list_similar_papers(model_data, doc_id = [], input_type = 'doc_id', show_authors = False, show_summary = False, return_n = 10):
+
+    model, all_titles, all_abstracts, all_authors, train_corpus, test_corpus = model_data
 
     if input_type == 'doc_id':
         print('Doc ID: ',doc_id,', title: ',all_titles[doc_id])
@@ -322,6 +354,105 @@ def list_similar_papers(doc_id = [], input_type = 'doc_id', show_authors = False
     return sims
 
 
+#---------------------------------------------------------------------
+#-------------Geolocation query using trained model-------------------
+#---------------------------------------------------------------------
+
+def list_similar_locations(model_data, doc_id = [], input_type = 'doc_id', show_authors = False, show_summary = False, return_n = 10, no_output = False, plt_radius = 10):
+
+    model, all_titles, all_abstracts, all_authors, all_ids, train_corpus, test_corpus, recent_affils, place_names, place_locs = model_data
+
+    if no_output == True:
+        inferred_vector = model.infer_vector(train_corpus[doc_id].words)
+        
+        
+    if input_type == 'doc_id':
+        print('Doc ID: ',doc_id,', title: ',all_titles[doc_id])
+        inferred_vector = model.infer_vector(train_corpus[doc_id].words)
+        start_range = 1
+    elif input_type == 'arxiv_id':
+        print('ArXiv id: ',doc_id)
+        arxiv_query_feed = run_simple_query(search_query='id:'+str(doc_id))
+        if len(arxiv_query_feed.entries) == 0:
+            print('error: arxiv id not found.')
+            return
+        else:
+            print('Title: '+arxiv_query_feed.entries[0].title)
+        arxiv_query_tokens = gensim.utils.simple_preprocess(arxiv_query_feed.entries[0].summary)
+        inferred_vector = model.infer_vector(arxiv_query_tokens)
+        start_range = 0
+    elif input_type == 'keywords':
+        print('Keyword(s): ',[doc_id[i] for i in range(len(doc_id))])
+        word_vector = model.wv[doc_id[0]]
+        if len(doc_id) > 1:
+           print('multi-keyword')
+           for i in range(1,len(doc_id)):
+               word_vector = word_vector + model.wv[doc_id[i]]
+#         word_vector = model.infer_vector(doc_id)
+        inferred_vector = word_vector
+        start_range = 0
+    else:
+        print('unrecognized input type.')
+        return
+    
+    sims = model.docvecs.most_similar([inferred_vector], topn=len(model.docvecs))
+    
+    year = np.zeros((len(all_ids),))
+    month = np.zeros((len(all_ids),))
+    num_authors = np.zeros((len(all_ids),))
+    for i in range(len(all_ids)):
+    # for i in range(100):
+        if all_ids[i][21:23] != 'he':
+            year[i] = int(all_ids[i][21:23])+2000
+            month[i] = int(all_ids[i][23:25])/12
+        else:
+            all_ids[i]
+
+        num_authors[i] = len(all_authors[i])
+
+    simnums = np.array([sims[i][0] for i in range(len(sims)) if year[sims[i][0]] == 2019 ])
+
+    lats_list = []
+    longs_list = []
+    # locs_list = []
+
+    good_ids = np.arange(len(all_ids))[year == 2019]
+
+    # print(all_titles[int(simnums[0])])
+    # print(int(simnums[0]), simnums[])
+
+    print('----')
+    for i in range(return_n):
+
+        arg = np.where(simnums[i] == good_ids)
+        affils = recent_affils[int(arg[0])]
+        for tempi in range(len(affils)):
+
+            locname = affils[tempi]        
+            if (locname != '-'):
+                commalocs = [pos for pos, char in enumerate(locname) if char == ',']
+                semicolonlocs = [pos for pos, char in enumerate(locname) if char == ';']
+                if len(semicolonlocs) > 0:
+                    locname = locname[0:semicolonlocs[0]]
+
+                if locname in place_names:                
+                    for k in range(len(place_names)):
+                        if place_names[k] == locname:
+                            lats_list.append(place_locs[k]['lat'])
+                            longs_list.append(place_locs[k]['lng'])
+    #                 print(locname)
+    #                 print(place_locs[locname == place_names])
+
+    #     print(simnums[i], arg, good_ids[arg])
+    #     print(all_titles[int(good_ids[arg])])
+    #     print(recent_affils[int(arg[0])])
+
+    fig = go.Figure(go.Densitymapbox(lat=lats_list,lon=longs_list, radius=plt_radius))
+    fig.update_layout(mapbox_style="stamen-terrain", mapbox_center_lon=0)
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.show()
+        
+    return
 
     
     

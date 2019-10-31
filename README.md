@@ -22,7 +22,7 @@ model, all_titles, all_abstracts, all_authors, train_corpus, test_corpus = model
 Having loaded the model, queries can now be run using ArXiv ids for papers as:
 
 ```python
-sims = cn.list_similar_papers(doc_id = 1903.10457, input_type='arxiv_id')
+sims = cn.list_similar_papers(model_data, doc_id = 1903.10457, input_type='arxiv_id')
 ```
 
 which returns
@@ -58,9 +58,9 @@ Most similar/relevant papers:
 Or using keywords:
 
 ```python
-sims = list_similar_papers(doc_id = ['simulation','sed','fitting'], 
+sims = cn.list_similar_papers(model_data, doc_id = ['simulation','sed','fitting'], 
                            input_type='keywords', 
-                           return_n=10, show_authors = True, show_summary=True)
+                           return_n=3, show_authors = True, show_summary=True)
 ```
 
 which returns
@@ -98,7 +98,7 @@ If you have any ideas for further applications for this, or ways it which we can
 
 ***
 
-This project was started during the hack session for .Astronomy 11 held at Toronto. See the full collection of present and past hacks at [the hacks collector](https://github.com/dotastro/hacks-collector).
+This project was started during the hack session for .Astronomy 11 held at Toronto. See the full collection of present and past hacks at [the hacks collector](https://github.com/dotastro/hacks-collector). Lots of thanks to Harshil Kamdar, Kate Storey-Fisher, Mubdi Rahman, Mariarosa Marinelli, Sarah Gossan and Bryan Gaensler for useful suggestions and data-wrangling help throughout the development process! 
 
 
 
