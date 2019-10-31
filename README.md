@@ -1,5 +1,5 @@
 # chaotic_neutral
-Associative clustering and ananlysis of papers on the ArXiv
+Associative clustering and analysis of papers on the ArXiv
 
 ***
 
