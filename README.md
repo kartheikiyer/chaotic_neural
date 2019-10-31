@@ -94,7 +94,7 @@ We present a general method to analyze reverberation mapping data that provides 
 
 ***
 
-If you have any ideas for further applications for this, or ways it which we can extend the project, you can comment on the following Google [Doc].(https://docs.google.com/document/d/1wDwFwKyPIz0thDSdMWzKbnvDvQQBXIO6x2-CBcMeKpM/edit?usp=sharing). If you are interested in contributing, please email me at kartheik.iyer@dunlap.utoronto.ca
+If you have any ideas for further applications for this, or ways it which we can extend the project, you can comment on the following Google [Doc](https://docs.google.com/document/d/1wDwFwKyPIz0thDSdMWzKbnvDvQQBXIO6x2-CBcMeKpM/edit?usp=sharing). If you are interested in contributing, please email me at kartheik.iyer@dunlap.utoronto.ca
 
 ***
 
