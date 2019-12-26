@@ -1,10 +1,7 @@
 matplotlib
 numpy
 feedparser
-urllib
 tqdm
-collections
 sklearn
 summa
-pickle
 gensim
