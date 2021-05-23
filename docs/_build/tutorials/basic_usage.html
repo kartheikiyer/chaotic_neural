@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Basic usage of the chaotic_neutral package &mdash; chaotic neural v 0.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv." href="arxiv_scraper_location_plots.html" />
+    <link rel="prev" title="Features" href="../usage/features.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> chaotic neural
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General Usage:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/features.html">Features</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic usage of the <code class="docutils literal notranslate"><span class="pre">chaotic_neutral</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv_scraper_location_plots.html#Showing-(roughly)-the-full-sample,-to-get-an-idea-of-the-implicit-prior.">Showing (roughly) the full sample, to get an idea of the implicit prior.</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">chaotic neural</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Basic usage of the <code class="docutils literal notranslate"><span class="pre">chaotic_neutral</span></code> package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/basic_usage.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Basic-usage-of-the-chaotic_neutral-package">
+<h1>Basic usage of the <code class="docutils literal notranslate"><span class="pre">chaotic_neutral</span></code> package<a class="headerlink" href="#Basic-usage-of-the-chaotic_neutral-package" title="Permalink to this headline">¶</a></h1>
+<p>This example notebook shows how to use the basic <code class="docutils literal notranslate"><span class="pre">galaxies_all</span></code> model trained on almost all ArXiv astro-ph.GA papers up to October 24, 2019.</p>
+<p>Users can query the model for similar papers using either - <code class="docutils literal notranslate"><span class="pre">input_type</span></code>: <code class="docutils literal notranslate"><span class="pre">arxiv_id</span></code> or <code class="docutils literal notranslate"><span class="pre">keywords</span></code> for the <code class="docutils literal notranslate"><span class="pre">doc_id</span></code> field. In the latter case, input a list of keyword strings. - <code class="docutils literal notranslate"><span class="pre">return_n</span></code>: controls how many results to return.</p>
+<p>Additional arguments include: - <code class="docutils literal notranslate"><span class="pre">show_authors</span></code> (default = False): set to True to show author list - <code class="docutils literal notranslate"><span class="pre">show_summary</span></code> (default = False): set to True to show a 1-2 sentence abstract summary generated using the <code class="docutils literal notranslate"><span class="pre">summa</span></code> package.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">chaotic_neural</span> <span class="k">as</span> <span class="nn">cn</span>
+</pre></div>
+</div>
+</div>
+<p>If you are running this notebook on your machine from a cloned version of the repository and are using the pre-trained model that comes with chaotic_neutral, please make sure to 1. either run this notebook in the same /docs/tutorial directory you find it in, or 2. change the directory <code class="docutils literal notranslate"><span class="pre">cn_dir</span></code> in the cell below to match the directory that chaotic_neural is installed in</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model_data</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">load_trained_doc2vec_model</span><span class="p">(</span><span class="s1">&#39;galaxies_all&#39;</span><span class="p">,</span> <span class="n">cn_dir</span> <span class="o">=</span> <span class="s1">&#39;../../chaotic_neural/&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="p">,</span> <span class="n">all_titles</span><span class="p">,</span> <span class="n">all_abstracts</span><span class="p">,</span> <span class="n">all_authors</span><span class="p">,</span> <span class="n">train_corpus</span><span class="p">,</span> <span class="n">test_corpus</span> <span class="o">=</span> <span class="n">model_data</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sims</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">list_similar_papers</span><span class="p">(</span><span class="n">model_data</span><span class="p">,</span> <span class="n">doc_id</span> <span class="o">=</span> <span class="mf">1903.10457</span><span class="p">,</span> <span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;arxiv_id&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ArXiv id:  1903.10457
+Title: Learning the Relationship between Galaxies Spectra and their Star
+  Formation Histories using Convolutional Neural Networks and Cosmological
+  Simulations
+-----------------------------
+Most similar/relevant papers:
+-----------------------------
+0 Learning the Relationship between Galaxies Spectra and their Star
+  Formation Histories using Convolutional Neural Networks and Cosmological
+  Simulations  (Corrcoef: 0.97 )
+1 A Sparse Gaussian Process Framework for Photometric Redshift Estimation  (Corrcoef: 0.71 )
+2 Improving Photometric Redshift Estimation using GPz: size information,
+  post processing and improved photometry  (Corrcoef: 0.68 )
+3 The Spatial Distribution of Satellite Galaxies Within Halos: Measuring
+  the Very Small Scale Angular Clustering of SDSS Galaxies  (Corrcoef: 0.68 )
+4 Photometric redshifts for the SDSS Data Release 12  (Corrcoef: 0.67 )
+5 The Data Analysis Pipeline for the SDSS-IV MaNGA IFU Galaxy Survey:
+  Emission-Line Modeling  (Corrcoef: 0.66 )
+6 Galaxy clustering dependence on the
+  $\left[\mathrm{O\scriptsize{II}}\right]$ emission line luminosity in the
+  local Universe  (Corrcoef: 0.66 )
+7 The ALHAMBRA survey: Accurate merger fractions by PDF analysis of
+  photometric close pairs  (Corrcoef: 0.66 )
+8 Automated Distant Galaxy Merger Classifications from Space Telescope
+  Images using the Illustris Simulation  (Corrcoef: 0.65 )
+9 Inferring the photometric and size evolution of galaxies from image
+  simulations  (Corrcoef: 0.65 )
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sims</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">list_similar_papers</span><span class="p">(</span><span class="n">model_data</span><span class="p">,</span> <span class="n">doc_id</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">,</span><span class="s1">&#39;sed&#39;</span><span class="p">,</span><span class="s1">&#39;fitting&#39;</span><span class="p">],</span>
+                           <span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;keywords&#39;</span><span class="p">,</span>
+                           <span class="n">return_n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">show_authors</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">show_summary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Keyword(s):  [&#39;simulation&#39;, &#39;sed&#39;, &#39;fitting&#39;]
+multi-keyword
+-----------------------------
+Most similar/relevant papers:
+-----------------------------
+0 Should we believe the results of UV-mm galaxy SED modelling?  (Corrcoef: 0.53 )
+Authors:------
+[{&#39;name&#39;: &#39;Christopher C. Hayward&#39;}, {&#39;name&#39;: &#39;Daniel J. B. Smith&#39;}]
+Summary:------
+We compare the properties inferred from the SED modelling with the true values and find that MAGPHYS recovers most physical parameters of the simulated galaxies well.
+
+1 Morphology-assisted galaxy mass-to-light predictions using deep learning  (Corrcoef: 0.47 )
+Authors:------
+[{&#39;name&#39;: &#39;Wouter Dobbels&#39;}, {&#39;name&#39;: &#39;Serge Krier&#39;}, {&#39;name&#39;: &#39;Stephan Pirson&#39;}, {&#39;name&#39;: &#39;Sébastien Viaene&#39;}, {&#39;name&#39;: &#39;Gert De Geyter&#39;}, {&#39;name&#39;: &#39;Samir Salim&#39;}, {&#39;name&#39;: &#39;Maarten Baes&#39;}]
+Summary:------
+Spectral energy distribution (SED) fitting can make use of all available fluxes and their errors to make a Bayesian estimate of the M/L.
+When we combine the morphology features with global g- and i-band luminosities, we find an improved estimate compared to a model which does not make use of morphology.
+While our method was trained to reproduce global SED fitted M/L, galaxy morphology gives us an important additional constraint when using one or two bands.
+
+2 Geometric and Dynamical Models of Reverberation Mapping Data  (Corrcoef: 0.46 )
+Authors:------
+[{&#39;name&#39;: &#39;Anna Pancoast&#39;}, {&#39;name&#39;: &#39;Brendon J. Brewer&#39;}, {&#39;name&#39;: &#39;Tommaso Treu&#39;}]
+Summary:------
+We present a general method to analyze reverberation mapping data that provides both estimates for the black hole mass and for the geometry and dynamics of the broad line region (BLR) in active galactic nuclei (AGN).
+
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="arxiv_scraper_location_plots.html" class="btn btn-neutral float-right" title="Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../usage/features.html" class="btn btn-neutral float-left" title="Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Kartheik Iyer
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

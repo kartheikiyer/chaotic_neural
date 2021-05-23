@@ -1,0 +1,7 @@
+matplotlib
+numpy
+feedparser
+tqdm
+sklearn
+summa
+gensim

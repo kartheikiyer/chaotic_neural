@@ -1,4 +1,4 @@
-# chaotic_neutral
+# chaotic_neural
 Associative clustering and analysis of papers on the ArXiv
 
 ***
@@ -14,7 +14,7 @@ Users can either build their own model (by searching ArXiv with specific queries
 You can load the pre-trained `galaxies_all` model using:
 
 ```python
-import chaotic_neutral as cn
+import chaotic_neural as cn
 model_data = cn.load_trained_doc2vec_model('galaxies_all')
 model, all_titles, all_abstracts, all_authors, train_corpus, test_corpus = model_data
 ```

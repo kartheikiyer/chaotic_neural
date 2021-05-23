@@ -3,16 +3,17 @@ import glob
 import os
 
 setup(
-    name="chaotic_neutral",
-    version="0.0.1",
+    name="chaotic_neural",
+    version="0.0.2",
     author="Kartheik Iyer",
     author_email="kartheik.iyer@dunlap.utoronto.ca",
-    url = "https://github.com/kartheikiyer/chaotic_neutral",
-    packages=["chaotic_neutral"],
+    url = "https://github.com/kartheikiyer/chaotic_neural",
+    packages=["chaotic_neural"],
     description="Associative clustering and ananlysis of papers on the ArXiv",
     long_description=open("README.md").read(),
-    package_data={"": ["README.md", "LICENSE"]},
+    package_data={"": ["README.md", "LICENSE","data/model_galaxies_all_trained.arxivmodel"]},
     include_package_data=True,
+    zip_safe=False,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
@@ -21,5 +22,5 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         ],
-    install_requires=["matplotlib", "numpy", "feedparser", "urllib", "tqdm", "collections", "sklearn", "summa", "pickle", "gensim"]
+    install_requires=["matplotlib", "numpy", "feedparser", "tqdm", "sklearn", "summa", "gensim"]
 )
