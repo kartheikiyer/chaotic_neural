@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv." href="arxiv_scraper_location_plots.html" />
-    <link rel="prev" title="Features" href="../usage/features.html" /> 
+    <link rel="next" title="Visualizing a trained model" href="visualize_trained_models.html" />
+    <link rel="prev" title="API documentation" href="../usage/features.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,13 +85,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage/features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/features.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/features.html#module-chaotic_neural"><code class="xref py py-mod docutils literal notranslate"><span class="pre">chaotic_neural</span></code></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorials:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Basic usage of the <code class="docutils literal notranslate"><span class="pre">chaotic_neutral</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="arxiv_scraper_location_plots.html#Showing-(roughly)-the-full-sample,-to-get-an-idea-of-the-implicit-prior.">Showing (roughly) the full sample, to get an idea of the implicit prior.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualize_trained_models.html">Visualizing a trained model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (mid-2020+) research on a given topic / related to a given paper has appeared on ArXiv.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_your_own_model.html">Building a custom model</a></li>
 </ul>
 
             
@@ -398,7 +400,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_data</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">load_trained_doc2vec_model</span><span class="p">(</span><span class="s1">&#39;galaxies_all&#39;</span><span class="p">,</span> <span class="n">cn_dir</span> <span class="o">=</span> <span class="s1">&#39;../../chaotic_neural/&#39;</span><span class="p">)</span>
+<span></span><span class="n">model_data</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">load_trained_doc2vec_model</span><span class="p">(</span><span class="s1">&#39;astro-ph-GA-23May2021&#39;</span><span class="p">,</span> <span class="n">cn_dir</span> <span class="o">=</span> <span class="s1">&#39;../../chaotic_neural/&#39;</span><span class="p">)</span>
 <span class="n">model</span><span class="p">,</span> <span class="n">all_titles</span><span class="p">,</span> <span class="n">all_abstracts</span><span class="p">,</span> <span class="n">all_authors</span><span class="p">,</span> <span class="n">train_corpus</span><span class="p">,</span> <span class="n">test_corpus</span> <span class="o">=</span> <span class="n">model_data</span>
 </pre></div>
 </div>
@@ -426,24 +428,23 @@ Most similar/relevant papers:
 -----------------------------
 0 Learning the Relationship between Galaxies Spectra and their Star
   Formation Histories using Convolutional Neural Networks and Cosmological
-  Simulations  (Corrcoef: 0.97 )
-1 A Sparse Gaussian Process Framework for Photometric Redshift Estimation  (Corrcoef: 0.71 )
-2 Improving Photometric Redshift Estimation using GPz: size information,
-  post processing and improved photometry  (Corrcoef: 0.68 )
-3 The Spatial Distribution of Satellite Galaxies Within Halos: Measuring
-  the Very Small Scale Angular Clustering of SDSS Galaxies  (Corrcoef: 0.68 )
-4 Photometric redshifts for the SDSS Data Release 12  (Corrcoef: 0.67 )
-5 The Data Analysis Pipeline for the SDSS-IV MaNGA IFU Galaxy Survey:
-  Emission-Line Modeling  (Corrcoef: 0.66 )
-6 Galaxy clustering dependence on the
-  $\left[\mathrm{O\scriptsize{II}}\right]$ emission line luminosity in the
-  local Universe  (Corrcoef: 0.66 )
-7 The ALHAMBRA survey: Accurate merger fractions by PDF analysis of
-  photometric close pairs  (Corrcoef: 0.66 )
-8 Automated Distant Galaxy Merger Classifications from Space Telescope
-  Images using the Illustris Simulation  (Corrcoef: 0.65 )
-9 Inferring the photometric and size evolution of galaxies from image
-  simulations  (Corrcoef: 0.65 )
+  Simulations  (Corrcoef: 0.99 )
+1 MCSED: A flexible spectral energy distribution fitting code and its
+  application to $z \sim 2$ emission-line galaxies  (Corrcoef: 0.73 )
+2 Augmenting machine learning photometric redshifts with Gaussian mixture
+  models  (Corrcoef: 0.73 )
+3 MAGPHYS+photo-z: Constraining the Physical Properties of Galaxies with
+  Unknown Redshifts  (Corrcoef: 0.72 )
+4 MOSFIRE Spectroscopy of Quiescent Galaxies at 1.5 &lt; z &lt; 2.5. II - Star
+  Formation Histories and Galaxy Quenching  (Corrcoef: 0.71 )
+5 Stellar Populations of over one thousand $z\sim0.8$ Galaxies from
+  LEGA-C: Ages and Star Formation Histories from D$_n$4000 and H$δ$  (Corrcoef: 0.70 )
+6 Comparison of Observed Galaxy Properties with Semianalytic Model
+  Predictions using Machine Learning  (Corrcoef: 0.70 )
+7 Simultaneous analysis of SDSS spectra and GALEX photometry with
+  STARLIGHT: Method and early results  (Corrcoef: 0.70 )
+8 Swift/UVOT+MaNGA (SwiM) Value-added Catalog  (Corrcoef: 0.68 )
+9 Evaluating hydrodynamical simulations with green valley galaxies  (Corrcoef: 0.68 )
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -451,9 +452,9 @@ Most similar/relevant papers:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sims</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">list_similar_papers</span><span class="p">(</span><span class="n">model_data</span><span class="p">,</span> <span class="n">doc_id</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">,</span><span class="s1">&#39;sed&#39;</span><span class="p">,</span><span class="s1">&#39;fitting&#39;</span><span class="p">],</span>
+<span></span><span class="n">sims</span> <span class="o">=</span> <span class="n">cn</span><span class="o">.</span><span class="n">list_similar_papers</span><span class="p">(</span><span class="n">model_data</span><span class="p">,</span> <span class="n">doc_id</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;quenching&#39;</span><span class="p">,</span><span class="s1">&#39;galaxy&#39;</span><span class="p">],</span>
                            <span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;keywords&#39;</span><span class="p">,</span>
-                           <span class="n">return_n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">show_authors</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">show_summary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                           <span class="n">return_n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">show_authors</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">show_summary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -462,30 +463,84 @@ Most similar/relevant papers:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Keyword(s):  [&#39;simulation&#39;, &#39;sed&#39;, &#39;fitting&#39;]
+Keyword(s):  [&#39;quenching&#39;, &#39;galaxy&#39;]
 multi-keyword
 -----------------------------
 Most similar/relevant papers:
 -----------------------------
-0 Should we believe the results of UV-mm galaxy SED modelling?  (Corrcoef: 0.53 )
+0 The cumulative star-formation histories of dwarf galaxies with TNG50. I:
+  Environment-driven diversity and connection to quenching  (Corrcoef: 0.58 )
 Authors:------
-[{&#39;name&#39;: &#39;Christopher C. Hayward&#39;}, {&#39;name&#39;: &#39;Daniel J. B. Smith&#39;}]
+[{&#39;name&#39;: &#39;Gandhali D. Joshi&#39;}, {&#39;name&#39;: &#39;Annalisa Pillepich&#39;}, {&#39;name&#39;: &#39;Dylan Nelson&#39;}, {&#39;name&#39;: &#39;Elad Zinger&#39;}, {&#39;name&#39;: &#39;Federico Marinacci&#39;}, {&#39;name&#39;: &#39;Volker Springel&#39;}, {&#39;name&#39;: &#39;Mark Vogelsberger&#39;}, {&#39;name&#39;: &#39;Lars Hernquist&#39;}]
 Summary:------
-We compare the properties inferred from the SED modelling with the true values and find that MAGPHYS recovers most physical parameters of the simulated galaxies well.
+The key factors determining the dwarfs&#39; SFHs are their status as central or satellite and their stellar mass, with centrals and more massive dwarfs assembling their stellar mass at later times on average compared to satellites and lower mass dwarfs.
+TNG50 predicts a large diversity in SFHs for both centrals and satellites, so that the stacked cumulative SFHs are representative of the TNG50 dwarf populations only in an average sense and individual dwarfs can have significantly different cumulative SFHs. Satellite dwarfs with the highest stellar mass to host mass ratios have the latest stellar mass assembly.
 
-1 Morphology-assisted galaxy mass-to-light predictions using deep learning  (Corrcoef: 0.47 )
+1 YZiCS: Preprocessing of dark halos in the hydrodynamic zoom-in
+  simulation of clusters  (Corrcoef: 0.57 )
 Authors:------
-[{&#39;name&#39;: &#39;Wouter Dobbels&#39;}, {&#39;name&#39;: &#39;Serge Krier&#39;}, {&#39;name&#39;: &#39;Stephan Pirson&#39;}, {&#39;name&#39;: &#39;Sébastien Viaene&#39;}, {&#39;name&#39;: &#39;Gert De Geyter&#39;}, {&#39;name&#39;: &#39;Samir Salim&#39;}, {&#39;name&#39;: &#39;Maarten Baes&#39;}]
+[{&#39;name&#39;: &#39;San Han&#39;}, {&#39;name&#39;: &#39;Rory Smith&#39;}, {&#39;name&#39;: &#39;Hoseung Choi&#39;}, {&#39;name&#39;: &#39;Luca Cortese&#39;}, {&#39;name&#39;: &#39;Barbara Catinella&#39;}, {&#39;name&#39;: &#39;Emanuele Contini&#39;}, {&#39;name&#39;: &#39;Sukyoung K. Yi&#39;}]
 Summary:------
-Spectral energy distribution (SED) fitting can make use of all available fluxes and their errors to make a Bayesian estimate of the M/L.
-When we combine the morphology features with global g- and i-band luminosities, we find an improved estimate compared to a model which does not make use of morphology.
-While our method was trained to reproduce global SED fitted M/L, galaxy morphology gives us an important additional constraint when using one or two bands.
+We find ~48% of today&#39;s cluster members were once satellites of other hosts.
+From a sample of heavily tidally stripped members in clusters today, nearly three quarters were previously in a host.
 
-2 Geometric and Dynamical Models of Reverberation Mapping Data  (Corrcoef: 0.46 )
+2 The infall of dwarf satellite galaxies are influenced by their host&#39;s
+  massive accretions  (Corrcoef: 0.56 )
 Authors:------
-[{&#39;name&#39;: &#39;Anna Pancoast&#39;}, {&#39;name&#39;: &#39;Brendon J. Brewer&#39;}, {&#39;name&#39;: &#39;Tommaso Treu&#39;}]
+[{&#39;name&#39;: &#34;Richard D&#39;Souza&#34;}, {&#39;name&#39;: &#39;Eric F. Bell&#39;}]
 Summary:------
-We present a general method to analyze reverberation mapping data that provides both estimates for the black hole mass and for the geometry and dynamics of the broad line region (BLR) in active galactic nuclei (AGN).
+Using zoom-in dark matter-only simulations of MW-mass haloes and concentrating on subhaloes that are thought to be capable of hosting dwarf galaxies, we demonstrate that the infall of a massive progenitor is accompanied with the accretion and destruction of a large number of subhaloes.
+
+3 The breakBRD Breakdown: Using IllustrisTNG to Track the Quenching of an
+  Observationally-Motivated Sample of Centrally Star-Forming Galaxies  (Corrcoef: 0.56 )
+Authors:------
+[{&#39;name&#39;: &#39;Claire Kopenhafer&#39;}, {&#39;name&#39;: &#39;Tjitske K. Starkenburg&#39;}, {&#39;name&#39;: &#39;Stephanie Tonnesen&#39;}, {&#39;name&#39;: &#39;Sarah Tuttle&#39;}]
+Summary:------
+However, the central, non-splashback breakBRD galaxies show similar environments, black hole masses, and merger rates, indicating that there is not a single formation trigger for inner star formation and outer quenching.
+
+4 The ACS LCID Project: On the origin of dwarf galaxy types: a
+  manifestation of the halo assembly bias?  (Corrcoef: 0.56 )
+Authors:------
+[{&#39;name&#39;: &#39;C. Gallart&#39;}, {&#39;name&#39;: &#39;M. Monelli&#39;}, {&#39;name&#39;: &#39;L. Mayer&#39;}, {&#39;name&#39;: &#39;A. Aparicio&#39;}, {&#39;name&#39;: &#39;G. Battaglia&#39;}, {&#39;name&#39;: &#39;E. J. Bernard&#39;}, {&#39;name&#39;: &#39;S. Cassisi&#39;}, {&#39;name&#39;: &#39;A. A. Cole&#39;}, {&#39;name&#39;: &#39;A. E. Dolphin&#39;}, {&#39;name&#39;: &#39;I. Drozdovsky&#39;}, {&#39;name&#39;: &#39;S. L. HIdalgo&#39;}, {&#39;name&#39;: &#39;J. F. Navarro&#39;}, {&#39;name&#39;: &#39;S. Salvadori&#39;}, {&#39;name&#39;: &#39;E. D. Skillman&#39;}, {&#39;name&#39;: &#39;P. B. Stetson&#39;}, {&#39;name&#39;: &#39;D. R. Weisz&#39;}]
+Summary:------
+We argue that these galaxies can be assigned to two basic types: fast dwarfs that started their evolution with a dominant and short star formation event, and slow dwarfs that formed a small fraction of their stars early and have continued forming stars until the present time (or almost).
+
+5 Mufasa:The strength and evolution of galaxy conformity in various
+  tracers  (Corrcoef: 0.54 )
+Authors:------
+[{&#39;name&#39;: &#39;Mika Rafieferantsoa&#39;}, {&#39;name&#39;: &#39;Romeel Davé&#39;}]
+Summary:------
+Mufasa produces conformity in observed properties such as colour, sSFR, and HI content; i.e neighbouring galaxies have similar properties.
+We show that low-mass and non-quenched haloes have weak conformity ($S(R)\leq 0.5$) extending to large projected radii $R$ in all properties, while high-mass and quenched haloes have strong conformity ($S(R)\sim 1$) that diminishes rapidly with $R$ and disappears at $R\geq 1$ Mpc.
+
+6 Star Formation in Isolated Dwarf Galaxies Hosting Tidal Debris:
+  Extending the Dwarf-Dwarf Merger Sequence  (Corrcoef: 0.54 )
+Authors:------
+[{&#39;name&#39;: &#39;Erin Kado-Fong&#39;}, {&#39;name&#39;: &#39;Jenny E. Greene&#39;}, {&#39;name&#39;: &#39;Johnny P. Greco&#39;}, {&#39;name&#39;: &#39;Rachael Beaton&#39;}, {&#39;name&#39;: &#39;Andy D. Goulding&#39;}, {&#39;name&#39;: &#39;Sean D. Johnson&#39;}, {&#39;name&#39;: &#39;Yutaka Komiyama&#39;}]
+Summary:------
+These findings extend the observed dwarf-dwarf merger sequence with a significant sample of dwarf galaxies, indicating that star formation triggered in mergers between dwarf galaxies continues after coalescence.
+
+7 WALLABY Pilot Survey: First Look at the Hydra I Cluster and Ram Pressure
+  Stripping of ESO 501-G075  (Corrcoef: 0.54 )
+Authors:------
+[{&#39;name&#39;: &#39;T. N. Reynolds&#39;}, {&#39;name&#39;: &#39;T. Westmeier&#39;}, {&#39;name&#39;: &#39;A. Elagali&#39;}, {&#39;name&#39;: &#39;B. Catinella&#39;}, {&#39;name&#39;: &#39;L. Cortese&#39;}, {&#39;name&#39;: &#39;N. Deg&#39;}, {&#39;name&#39;: &#39;B. -Q. For&#39;}, {&#39;name&#39;: &#39;P. Kamphuis&#39;}, {&#39;name&#39;: &#39;D. Kleiner&#39;}, {&#39;name&#39;: &#39;B. S. Koribalski&#39;}, {&#39;name&#39;: &#39;K. Lee-Waddell&#39;}, {&#39;name&#39;: &#39;S. -H. Oh&#39;}, {&#39;name&#39;: &#39;J. Rhee&#39;}, {&#39;name&#39;: &#39;P. Serra&#39;}, {&#39;name&#39;: &#39;K. Spekkens&#39;}, {&#39;name&#39;: &#39;L. Staveley-Smith&#39;}, {&#39;name&#39;: &#39;A. R. H. Stevens&#39;}, {&#39;name&#39;: &#39;E. N. Taylor&#39;}, {&#39;name&#39;: &#39;J. Wang&#39;}, {&#39;name&#39;: &#39;O. I. Wong&#39;}]
+Summary:------
+We conclude that, as ESO 501-G075 has a typical HI mass compared to similar galaxies in the field and its morphology is compatible with a ram pressure scenario, ESO 501-G075 is likely recently infalling into the cluster and in the early stages of experiencing ram pressure.
+
+8 SDSS-IV MaNGA: The Formation Sequence of S0 Galaxies  (Corrcoef: 0.53 )
+Authors:------
+[{&#39;name&#39;: &#39;Amelia Fraser-McKelvie&#39;}, {&#39;name&#39;: &#39;Alfonso Aragón-Salamanca&#39;}, {&#39;name&#39;: &#39;Michael Merrifield&#39;}, {&#39;name&#39;: &#39;Martha Tabor&#39;}, {&#39;name&#39;: &#39;Mariangela Bernardi&#39;}, {&#39;name&#39;: &#39;Niv Drory&#39;}, {&#39;name&#39;: &#39;Taniya Parikh&#39;}, {&#39;name&#39;: &#39;Maria Argudo-Fernández&#39;}]
+Summary:------
+In order to determine the conditions in which each scenario dominates, we derive stellar populations of both the bulge and disk regions of 279 lenticular galaxies in the MaNGA survey.
+Old and metal-rich bulges and disks belong to massive galaxies, and young and metal-poor bulges and disks are hosted by low-mass galaxies.
+
+9 Secondary Infall in the Seyfert&#39;s Sextet: A Plausible Way Out of the
+  Short Crossing Time Paradox  (Corrcoef: 0.53 )
+Authors:------
+[{&#39;name&#39;: &#39;Omar López-Cruz&#39;}, {&#39;name&#39;: &#39;Héctor Javier Ibarra-Medel&#39;}, {&#39;name&#39;: &#39;Sebastián F. Sánchez&#39;}, {&#39;name&#39;: &#39;Mark Birkinshaw&#39;}, {&#39;name&#39;: &#39;Christopher Añorve&#39;}, {&#39;name&#39;: &#39;Jorge K. Barrera-Ballesteros&#39;}, {&#39;name&#39;: &#39;Jesús Falcon-Barroso&#39;}, {&#39;name&#39;: &#39;Wayne A. Barkhouse&#39;}, {&#39;name&#39;: &#39;Juan P. Torres-Papaqui&#39;}]
+Summary:------
+We suggest that after the first turn-around, initially gas-rich galaxies crossed for the first time, consuming most of their gas.
+Therefore, we suggest that SS galaxies have survived one crossing during a Hubble time.
 
 </pre></div></div>
 </div>
@@ -508,10 +563,10 @@ We present a general method to analyze reverberation mapping data that provides 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="arxiv_scraper_location_plots.html" class="btn btn-neutral float-right" title="Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="visualize_trained_models.html" class="btn btn-neutral float-right" title="Visualizing a trained model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../usage/features.html" class="btn btn-neutral float-left" title="Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../usage/features.html" class="btn btn-neutral float-left" title="API documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

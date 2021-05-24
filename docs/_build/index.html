@@ -84,13 +84,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage/dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage/features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/features.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/features.html#module-chaotic_neural"><code class="xref py py-mod docutils literal notranslate"><span class="pre">chaotic_neural</span></code></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/basic_usage.html">Basic usage of the <code class="docutils literal notranslate"><span class="pre">chaotic_neutral</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#Showing-(roughly)-the-full-sample,-to-get-an-idea-of-the-implicit-prior.">Showing (roughly) the full sample, to get an idea of the implicit prior.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/visualize_trained_models.html">Visualizing a trained model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (mid-2020+) research on a given topic / related to a given paper has appeared on ArXiv.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/build_your_own_model.html">Building a custom model</a></li>
 </ul>
 
             
@@ -189,19 +191,39 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage/dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage/features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/features.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/features.html#module-chaotic_neural"><code class="xref py py-mod docutils literal notranslate"><span class="pre">chaotic_neural</span></code></a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/basic_usage.html">Basic usage of the <code class="docutils literal notranslate"><span class="pre">chaotic_neutral</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (from the start of 2019) research on a given topic / related to a given paper has appeared on ArXiv.</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#keyword-search-example">keyword search example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#ArXiv-ID-search-example">ArXiv ID search example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/visualize_trained_models.html">Visualizing a trained model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Loading-the-trained-model:">Loading the trained model:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Generating-vectors-corresponding-to-each-document-in-the-corpus:">Generating vectors corresponding to each document in the corpus:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Using-UMAP,-we-can-now-generate-an-embedding-of-the-50-dim-vector-space-in-two-dimensions:">Using UMAP, we can now generate an embedding of the 50-dim vector space in two dimensions:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Let’s-create-a-more-dynamic-version-of-the-plot.">Let’s create a more dynamic version of the plot.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Check-different-areas-of-the-plot-by-quantities-like-publishing-year,-number-of-authors,-and-primary-category.-We-expect-no-large-correlations-for-any-of-these-quantities,-and-this-serves-more-as-a-sanity-check.">Check different areas of the plot by quantities like publishing year, number of authors, and primary category. We expect no large correlations for any of these quantities, and this serves more as a sanity check.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#An-now,-we-can-start-searching-for-specific-phrases:">An now, we can start searching for specific phrases:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Finally,-let’s-check-to-see-if-the-same-phenomenon-(in-this-case,-a-tight-observed-correlation-between-the-stellar-masses-and-star-formation-rates-of-galaxies)-called-by-different-names-are-found-in-the-same-part-of-the-UMAP-embedding:">Finally, let’s check to see if the same phenomenon (in this case, a tight observed correlation between the stellar masses and star formation rates of galaxies) called by different names are found in the same part of the UMAP embedding:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#Checking-different-simulations">Checking different simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/visualize_trained_models.html#And-different-telescopes">And different telescopes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#Showing-(roughly)-the-full-sample,-to-get-an-idea-of-the-implicit-prior.">Showing (roughly) the full sample, to get an idea of the implicit prior.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html">Generate plots corresponding to where recent (mid-2020+) research on a given topic / related to a given paper has appeared on ArXiv.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#keyword-search-example">keyword search example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#ArXiv-ID-search-example">ArXiv ID search example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/arxiv_scraper_location_plots.html#Showing-(roughly)-the-full-sample,-to-get-an-idea-of-the-implicit-prior.">Showing (roughly) the full sample, to get an idea of the implicit prior.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/build_your_own_model.html">Building a custom model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/build_your_own_model.html#1.-Running-a-simple-ArXiv-query-and-printing-the-results">1. Running a simple ArXiv query and printing the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/build_your_own_model.html#2.-Next,-we-want-to-generalize-this-to-a-large-set-of-feeds-corresponding-to-a-particular-topic">2. Next, we want to generalize this to a large set of feeds corresponding to a particular topic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/build_your_own_model.html#3.-Training-the-model">3. Training the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/build_your_own_model.html#4.-Loading-the-trained-model-and-checking-that-it-works!">4. Loading the trained model and checking that it works!</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <p>The code is designed to be intuitive to use, and and consists of three steps to get you started:</p>

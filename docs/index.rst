@@ -27,7 +27,9 @@ Users can either build their own model (by searching ArXiv with specific queries
    :caption: Tutorials:
    
    tutorials/basic_usage
+   tutorials/visualize_trained_models
    tutorials/arxiv_scraper_location_plots
+   tutorials/build_your_own_model
    
    
 The code is designed to be intuitive to use, and and consists of three steps to get you started:

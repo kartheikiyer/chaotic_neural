@@ -2,6 +2,7 @@ import feedparser
 import urllib
 from tqdm import tqdm # progress bars!
 import smart_open
+import time
 
 import collections
 from sklearn.decomposition import IncrementalPCA    # inital reduction
@@ -23,7 +24,7 @@ import plotly.graph_objects as go
 #-------------------------ArXiv querying------------------------------
 #---------------------------------------------------------------------
 
-def run_simple_query(search_query = 'all:sed+fitting', max_results = 10, start = 0):
+def run_simple_query(search_query = 'all:sed+fitting', max_results = 10, start = 0, sort_by = 'lastUpdatedDate', sort_order = 'descending'):
     """
         Query ArXiv to return search results for a particular query
         Parameters
@@ -46,9 +47,9 @@ def run_simple_query(search_query = 'all:sed+fitting', max_results = 10, start =
     # Base api query url
     base_url = 'http://export.arxiv.org/api/query?';
 
-    query = 'search_query=%s&start=%i&max_results=%i' % (search_query,
+    query = 'search_query=%s&start=%i&max_results=%i&sortBy=%s&sortOrder=%s' % (search_query,
                                                      start,
-                                                     max_results)
+                                                     max_results,sort_by,sort_order)
 
     # Opensearch metadata such as totalResults, startIndex, 
     # and itemsPerPage live in the opensearch namespase.
@@ -81,7 +82,7 @@ def print_feed_info(feed):
     
     return
 
-def print_feed_entries(feed, num_entries = 3):
+def print_feed_entries(feed, num_entries = 3, print_abstract = False):
     """
     Run through each entry, and print out information
     """
@@ -125,33 +126,35 @@ def print_feed_entries(feed, num_entries = 3):
                 comment = 'No comment found'
             print('Comments: %s' % comment)
 
-            # Since the <arxiv:primary_category> element has no data, only
-            # attributes, feedparser does not store anything inside
-            # entry.arxiv_primary_category
-            # This is a dirty hack to get the primary_category, just take the
-            # first element in entry.tags.  If anyone knows a better way to do
-            # this, please email the list!
-            print('Primary Category: %s' % entry.tags[0]['term'])
+            if print_abstract == True:
+                # Since the <arxiv:primary_category> element has no data, only
+                # attributes, feedparser does not store anything inside
+                # entry.arxiv_primary_category
+                # This is a dirty hack to get the primary_category, just take the
+                # first element in entry.tags.  If anyone knows a better way to do
+                # this, please email the list!
+                print('Primary Category: %s' % entry.tags[0]['term'])
 
-            # Lets get all the categories
-            all_categories = [t['term'] for t in entry.tags]
-            print('All Categories: %s' % (', ').join(all_categories))
+                # Lets get all the categories
+                all_categories = [t['term'] for t in entry.tags]
+                print('All Categories: %s' % (', ').join(all_categories))
 
-            # The abstract is in the <summary> element
-            print('Abstract: %s' %  entry.summary)
+                # The abstract is in the <summary> element
+                print('Abstract: %s' %  entry.summary)
+               
 
             print('\n\n --------------\n\n')
 
     return
 
-def make_feeds(arxiv_query = 'cat:astro-ph.GA', chunksize = 10, max_setsize = 50000):
+def make_feeds(arxiv_query = 'cat:astro-ph.GA', chunksize = 10, max_setsize = 50000, start_index = 0, delay_sec = 3):
     """
     Generate feeds by iteratively querying ArXiv
     """
     
     # first estimate the total number of results
     sq = arxiv_query
-    feed = run_simple_query(search_query = sq, max_results=chunksize, start = 0)
+    feed = run_simple_query(search_query = sq, max_results=chunksize, start = start_index)
     total_results = feed.feed.opensearch_totalresults
 
     # now iterate in chunks of 100 till we either get the first 5k papers or all the results
@@ -162,6 +165,7 @@ def make_feeds(arxiv_query = 'cat:astro-ph.GA', chunksize = 10, max_setsize = 50
     feeds = []
 
     for i in tqdm(range(num_chunks)):
+        time.sleep(delay_sec)
         feed = run_simple_query(search_query = sq, max_results=max_results, start = i*max_results)
         feeds.append(feed)
         
@@ -174,6 +178,8 @@ def make_feeds(arxiv_query = 'cat:astro-ph.GA', chunksize = 10, max_setsize = 50
 
 def read_corpus(feeds, tokens_only=False, titles = False, authors = False):
     ctr = -1
+    num_chunks = len(feeds)
+    
     for nc in tqdm(range(num_chunks)):
         # why do some of the chunks have 0 entries?
         # print(len(feeds[nc].entries))
@@ -191,9 +197,11 @@ def read_corpus(feeds, tokens_only=False, titles = False, authors = False):
                 
 
 
-def save_trained_doc2vec_model(fname_tag, cn_dir = 'chaotic_neural/'):
+def save_trained_doc2vec_model(model, labeldata, fname_tag, cn_dir = 'chaotic_neural/'):
 
     model.save(cn_dir + 'data/model_'+fname_tag+'_trained.arxivmodel')
+    
+    all_titles, all_abstracts, all_authors, all_ids, train_corpus, test_corpus = labeldata
 
     with open(cn_dir + "data/titles"+fname_tag+".pkl", "wb") as fp:   #Pickling
         pickle.dump(all_titles, fp)
@@ -261,8 +269,39 @@ def load_trained_doc2vec_model_mapper(fname_tag, cn_dir = 'chaotic_neural/'):
     return [model, all_titles, all_abstracts, all_authors, all_ids, train_corpus, test_corpus, recent_affils, place_names, place_locs]
 
 
-def build_and_train_model(feeds, fname_tag = 'trained_model'):
+def build_and_train_model(feeds, fname_tag = 'trained_model', cn_dir = 'chaotic_neural/', vector_size = 50, min_count = 2, epochs = 40, **doc2vec_kwargs):
+    """
+        Train a Doc2Vec model using the distributed bag-of-words model implemented in gensim and save it at a specified location.
+        Parameters
+        ----------
+        feeds: generator
+            use the corpus generated by querying ArXiv.
+        fname_tag: str, default = 'trained_model'
+            filename to save trained model.
+        cn_dir: str, default = 'chaotic_neural/'
+            folder to save trained model in. note: this will save the model in a 'data' folder within the specified folder.
+        vector size: int, default = 50
+            dimensionality of vector space in which the abstracts are projected. Larger spaces capture features better, but are also more difficult to search/sample in. 
+        min_count: int, default = 2
+            ignore words with lower frequency than this.
+        epochs: int, default = 40
+            number of times to train the model over the whole dataset.
+        **doc2vec_kwargs: additional arguments to provide to the individual training parameters. For more information on the list of available parameters, see https://radimrehurek.com/gensim/models/doc2vec.html
+        Returns
+        -------
+        model: doc2vec model
+            object containing trained doc2vec model.
+        train_corpus:
+            list of training data used to train the model.
+        test_corpus:
+            list of training labels used in training the model.
+        Notes
+        -----
+            There's more functionality to be added here, 
+        """
 
+    num_chunks = len(feeds)
+    
     train_corpus = list(read_corpus(feeds))
     test_corpus = list(read_corpus(feeds, tokens_only = True))
 
@@ -270,6 +309,7 @@ def build_and_train_model(feeds, fname_tag = 'trained_model'):
     all_authors = []
     all_abstracts = []
     all_ids = []
+    
     for nc in tqdm(range(num_chunks)):
         for i in range(len(feeds[nc].entries)): 
             all_titles.append(feeds[nc].entries[i].title)
@@ -277,11 +317,12 @@ def build_and_train_model(feeds, fname_tag = 'trained_model'):
             all_abstracts.append(feeds[nc].entries[i].summary)
             all_ids.append(feeds[nc].entries[i].id)
 
-    model = gensim.models.doc2vec.Doc2Vec(vector_size=50, min_count=2, epochs=40,)
+    model = gensim.models.doc2vec.Doc2Vec(vector_size=vector_size, min_count=min_count, epochs=epochs, **doc2vec_kwargs)
     model.build_vocab(train_corpus)
     model.train(train_corpus, total_examples=model.corpus_count, epochs=model.epochs)
     
-    save_trained_doc2vec_model(fname_tag)
+    labeldata = [all_titles, all_abstracts, all_authors, all_ids, train_corpus, test_corpus]    
+    save_trained_doc2vec_model(model, labeldata, fname_tag, cn_dir = cn_dir)
     
     return model, train_corpus, test_corpus
 
@@ -426,27 +467,30 @@ def list_similar_locations(model_data, doc_id = [], input_type = 'doc_id', show_
     for i in range(return_n):
 
         arg = np.where(simnums[i] == good_ids)
-        affils = recent_affils[int(arg[0])]
-        for tempi in range(len(affils)):
+        try:
+            affils = recent_affils[int(arg[0])]
+            for tempi in range(len(affils)):
 
-            locname = affils[tempi]        
-            if (locname != '-'):
-                commalocs = [pos for pos, char in enumerate(locname) if char == ',']
-                semicolonlocs = [pos for pos, char in enumerate(locname) if char == ';']
-                if len(semicolonlocs) > 0:
-                    locname = locname[0:semicolonlocs[0]]
+                locname = affils[tempi]        
+                if (locname != '-'):
+                    commalocs = [pos for pos, char in enumerate(locname) if char == ',']
+                    semicolonlocs = [pos for pos, char in enumerate(locname) if char == ';']
+                    if len(semicolonlocs) > 0:
+                        locname = locname[0:semicolonlocs[0]]
 
-                if locname in place_names:                
-                    for k in range(len(place_names)):
-                        if place_names[k] == locname:
-                            lats_list.append(place_locs[k]['lat'])
-                            longs_list.append(place_locs[k]['lng'])
-    #                 print(locname)
-    #                 print(place_locs[locname == place_names])
+                    if locname in place_names:                
+                        for k in range(len(place_names)):
+                            if place_names[k] == locname:
+                                lats_list.append(place_locs[k]['lat'])
+                                longs_list.append(place_locs[k]['lng'])
+        #                 print(locname)
+        #                 print(place_locs[locname == place_names])
 
-    #     print(simnums[i], arg, good_ids[arg])
-    #     print(all_titles[int(good_ids[arg])])
-    #     print(recent_affils[int(arg[0])])
+        #     print(simnums[i], arg, good_ids[arg])
+        #     print(all_titles[int(good_ids[arg])])
+        #     print(recent_affils[int(arg[0])])
+        except:
+            affils = []
 
     fig = go.Figure(go.Densitymapbox(lat=lats_list,lon=longs_list, radius=plt_radius))
     fig.update_layout(mapbox_style="stamen-terrain", mapbox_center_lon=0)

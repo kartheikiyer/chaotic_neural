@@ -35,6 +35,7 @@ master_doc = 'index'
 extensions = ['sphinx_rtd_theme',
               'nbsphinx',
     'sphinx.ext.mathjax',
+    'sphinx.ext.autodoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
