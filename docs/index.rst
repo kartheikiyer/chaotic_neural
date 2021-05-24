@@ -8,9 +8,13 @@ chaotic_neural: Associative clustering and analysis of papers on the ArXiv
 
 This package aims at providing a model to find related papers on ArXiv given another paper (or a set of keywords).
 
+.. image:: https://readthedocs.org/projects/chaotic-neural/badge/?version=latest
+:target: https://chaotic-neural.readthedocs.io/en/latest/?badge=latest
+:alt: Documentation Status
+
 It aims to be different from existing resources like the default ArXiv search, the new ADS, or ArXivsorter in that it uses Doc2Vec, an unsupervised algorithm that trains a shallow neural network to transform every document (in this case ArXiv abstracts) into a vector in a high-dimensional vector space. Similar papers are then found by finding the closest vectors to one of interest in this space. This also allows for performing vector arithmetic operations on keywords (i.e. adding and subtracting keywords) as well as vectors corresponding to entire documents to structure specific queries.
 
-Users can either build their own model (by searching ArXiv with specific queries) or use the pre-trained model that has been trained on all the astro-ph.GA papers up to Thursday, Oct 24, 2019.
+Users can either build their own model (by searching ArXiv with specific queries) or use the pre-trained model that has been trained on recent astro-ph.GA papers up to Sunday, May 23, 2021.
 
 
 .. toctree::
@@ -47,6 +51,9 @@ Contribute
 - Issue Tracker: https://github.com/kartheikiyer/chaotic_neural/issues
 - Source Code: https://github.com/kartheikiyer/chaotic_neural
 
+benchmark - predictions w/ normalizing flows
+
+spectral signal as a function of parameters
 Support
 -------
 

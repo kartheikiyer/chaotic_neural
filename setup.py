@@ -4,7 +4,7 @@ import os
 
 setup(
     name="chaotic_neural",
-    version="0.0.2",
+    version="0.0.3",
     author="Kartheik Iyer",
     author_email="kartheik.iyer@dunlap.utoronto.ca",
     url = "https://github.com/kartheikiyer/chaotic_neural",
